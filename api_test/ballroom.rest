@@ -1,0 +1,87 @@
+### L'IP del server e' quello del gateway Docker
+### Il server e' in ascolto sulla porta 8080 rimappata sul container con la 8081
+### NB: prima dei test effettuare il login e copiare il nuovo token nella variabile apposita
+@baseUrl = http://172.17.0.1:8081
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoxLCJpc3MiOiJiYWxscm9vbSIsInN1YiI6IkFkbWluIiwiZXhwIjoxNzQ3NzY0Mjk3LCJuYmYiOjE3NDc3NjA2OTcsImlhdCI6MTc0Nzc2MDY5NywianRpIjoiMSJ9.xRk_E8xrRt_9Y485vtrm4VAOTSQZnYMZMoHyKcnVs5E
+#
+### Base
+GET {{baseUrl}}
+Content-Type: application/json; charset=utf-8
+#
+#
+### Gest scuola
+GET {{baseUrl}}/scuola
+Content-Type: application/json; charset=utf-8
+Authorization: Bearer {{token}}
+#
+### Get sala=1
+GET {{baseUrl}}/scuola/sala/1 HTTP/1.1
+Content-Type: application/json; charset=utf-8
+Authorization: Bearer {{token}}
+#
+### List sale
+GET {{baseUrl}}/scuola/sale HTTP/1.1
+Content-Type: application/json; charset=utf-8
+Authorization: Bearer {{token}}
+#
+### Nuova sala con dati errati (deve ritornare HTTP 400 Bad Request)
+POST {{baseUrl}}/scuola/sala HTTP/1.1
+Content-Type: application/json; charset=utf-8
+
+{
+  "Id": 0,
+  "Created_at": "",
+  "Updated_at": "",
+  "Nome": "Sala nuova"
+}
+#
+### Nuova sala con dati corretti
+POST {{baseUrl}}/scuola/sala HTTP/1.1
+Content-Type: application/json; charset=utf-8
+
+{
+  "Nome": "Sala molto nuova"
+}
+#
+### Aggiornamento sala
+PUT {{baseUrl}}/scuola/sala HTTP/1.1
+Content-Type: application/json; charset=utf-8
+
+{
+  "Id": 25,
+  "Nome": "Sala modificata"
+}
+
+#
+### Cancellazione sala
+DELETE {{baseUrl}}/scuola/sala/26 HTTP/1.1
+Content-Type: application/json; charset=utf-8
+#
+### Token jwt
+POST {{baseUrl}}/login HTTP/1.1
+Content-Type: application/json; charset=utf-8
+
+{
+  "Nome": "Admin",
+  "Password": "prova123"
+}
+
+# 
+### richiesta errate
+POST {{baseUrl}}/login HTTP/1.1
+Content-Type: application/json; charset=utf-8
+
+{
+  "Nome": "",
+  "Password": "prova123"
+}
+
+#
+### richiesta errate
+GET {{baseUrl}}/login HTTP/1.1
+Content-Type: application/json; charset=utf-8
+
+#
+### preflight
+OPTIONS {{baseUrl}}/login HTTP/1.1
+Content-Type: application/json; charset=utf-8

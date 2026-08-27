@@ -1,0 +1,113 @@
+package hal
+
+import (
+	"encoding/json"
+	"fmt"
+)
+
+/*
+Hipertext Application Language (HAL) implementation
+*/
+
+// rel types
+const (
+	FIRST string = "first"
+	LAST  string = "last"
+	NEXT  string = "next"
+	PREV  string = "prev"
+	SELF  string = "self"
+	START string = "start"
+)
+
+const (
+	EMBEDDED_TAG string = "_embedded"
+	LINKS_TAG    string = "_links"
+	PAGE_TAG     string = "_page"
+)
+
+type ResourcePaging struct {
+	Page  int  `json:"page,omitempty"`
+	Size  int  `json:"size,omitempty"`
+	First bool `json:"first,omitempty"`
+	Last  bool `json:"last,omitempty"`
+	Pages int  `json:"pages,omitempty"`
+	Items int  `json:"items,omitempty"`
+}
+
+type ResourceLink struct {
+	Rel  string
+	Href string `json:"href"`
+}
+
+type ResourceData struct {
+	Data any
+}
+
+type ResourceEmbedded struct {
+	Links []ResourceLink `json:"_links"`
+	Data  ResourceData
+}
+
+type Resource interface {
+	Link() []ResourceLink
+	Data() ResourceData
+	Embedded() []ResourceEmbedded
+	Paging() ResourcePaging
+	AddLink(ResourceLink)
+	AddData(ResourceData)
+	AddEmbedded([]ResourceLink, ResourceData)
+	AddPaging(ResourcePaging)
+	ToJson() ([]byte, error)
+}
+
+type resourceObject struct {
+	OLinks    []ResourceLink     `json:"_links"`
+	OEmbedded []ResourceEmbedded `json:"_embedded,omitempty"`
+	OData     ResourceData       `json:",omitempty"`
+	OPage     ResourcePaging     `json:",omitempty"`
+}
+
+func NewHalResource() Resource {
+	return &resourceObject{OLinks: []ResourceLink{}, OEmbedded: []ResourceEmbedded{}, OData: ResourceData{}, OPage: ResourcePaging{}}
+}
+
+func (r *resourceObject) Link() []ResourceLink {
+	return r.OLinks
+}
+
+func (r *resourceObject) Data() ResourceData {
+	return r.OData
+}
+
+func (r *resourceObject) Embedded() []ResourceEmbedded {
+	return r.OEmbedded
+}
+
+func (r *resourceObject) Paging() ResourcePaging {
+	return r.OPage
+}
+
+func (r *resourceObject) AddLink(l ResourceLink) {
+	r.OLinks = append(r.OLinks, l)
+}
+
+func (r *resourceObject) AddData(d ResourceData) {
+	r.OData = d
+}
+
+func (r *resourceObject) AddEmbedded(l []ResourceLink, d ResourceData) {
+	re := new(ResourceEmbedded)
+	re.Links = l
+	re.Data = d
+	r.OEmbedded = append(r.OEmbedded, *re)
+}
+
+func (r *resourceObject) AddPaging(p ResourcePaging) {
+	r.OPage = p
+}
+
+func (r *resourceObject) ToJson() ([]byte, error) {
+	fmt.Printf("HAL: \n%v", r)
+	jsonBites, err := json.Marshal(r)
+	return jsonBites, err
+}

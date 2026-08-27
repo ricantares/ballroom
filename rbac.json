@@ -1,0 +1,28 @@
+{
+	"rbac": [
+        {
+		    "pattern": "/scuola",
+            "permissions": {
+                "can_read": ["Admin", "Direzione", "Iscritto", "Maestro", "Staff"],
+			    "can_write": ["Admin"],
+			    "can_delete": ["Admin"]
+            }
+        },
+        {
+            "pattern": "/scuola/sale",
+            "permissions": {
+                "can_read": ["Admin", "Direzione", "Iscritto", "Maestro", "Staff"],
+                "can_write": ["Admin"],
+                "can_delete": ["Admin"]
+            }
+        },
+        {
+            "pattern": "/scuola/sala/\\d*",
+            "permissions": {
+                "can_read": ["Admin", "Direzione", "Iscritto", "Maestro", "Staff"],
+                "can_write": ["Admin"],
+                "can_delete": ["Admin"]
+            }
+        }
+    ]
+}

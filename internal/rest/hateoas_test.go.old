@@ -1,0 +1,47 @@
+package hal
+
+import (
+	"fmt"
+	"testing"
+	"time"
+
+	"github.com/stretchr/testify/suite"
+)
+
+type localData struct {
+	Campo1 string     `json:"campo1,omitempty"`
+	Campo2 int        `json:"campo2,omitempty"`
+	Campo3 bool       `json:"campo3,omitempty"`
+	Campo4 *time.Time `json:"campo4,omitempty"`
+}
+
+type HateoasTestSuite struct {
+	suite.Suite
+}
+
+func (suite *HateoasTestSuite) SetupSuite() {
+}
+
+func (suite *HateoasTestSuite) TeardownSuite() {
+}
+
+func (suite *HateoasTestSuite) TestSimpleHal() {
+	h := NewHalResource()
+	l := ResourceLink{Rel: "self", Href: "/scuola"}
+	t := time.Now()
+	ld := localData{
+		Campo1: "campo1",
+		Campo2: 42,
+		Campo3: true,
+		Campo4: &t,
+	}
+	d := ResourceData{Data: ld}
+	h.AddLink(l)
+	h.AddData(d)
+	j, err := h.ToJson()
+	suite.Nil(err)
+	fmt.Printf("\nJSON: \n %v", string(j))
+}
+func TestHateoasTestSuite(t *testing.T) {
+	suite.Run(t, new(HateoasTestSuite))
+}
