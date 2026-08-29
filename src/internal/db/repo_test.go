@@ -10,9 +10,9 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/suite"
-	"ricantares.com/ballroom/internal/domain"
-	"ricantares.com/ballroom/internal/logger"
-	"ricantares.com/ballroom/internal/security"
+	"ricantares.com/ballroom/src/internal/domain"
+	"ricantares.com/ballroom/src/internal/logger"
+	"ricantares.com/ballroom/src/internal/security"
 )
 
 type RepoTestSuite struct {

@@ -5,9 +5,9 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"ricantares.com/ballroom/internal/db"
-	"ricantares.com/ballroom/internal/domain"
-	"ricantares.com/ballroom/internal/rest"
+	"ricantares.com/ballroom/src/internal/db"
+	"ricantares.com/ballroom/src/internal/domain"
+	"ricantares.com/ballroom/src/internal/rest"
 )
 
 // Interfacce che il route handler deve implementare

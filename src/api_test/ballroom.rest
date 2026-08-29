@@ -1,8 +1,8 @@
 ### L'IP del server e' quello del gateway Docker
 ### Il server e' in ascolto sulla porta 8080 rimappata sul container con la 8081
 ### NB: prima dei test effettuare il login e copiare il nuovo token nella variabile apposita
-@baseUrl = http://172.17.0.1:8081
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoxLCJpc3MiOiJiYWxscm9vbSIsInN1YiI6IkFkbWluIiwiZXhwIjoxNzQ3NzY0Mjk3LCJuYmYiOjE3NDc3NjA2OTcsImlhdCI6MTc0Nzc2MDY5NywianRpIjoiMSJ9.xRk_E8xrRt_9Y485vtrm4VAOTSQZnYMZMoHyKcnVs5E
+@baseUrl = http://172.17.0.3:8080
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoxLCJpc3MiOiJiYWxscm9vbSIsInN1YiI6IkFkbWluIiwiZXhwIjoxNzg4MDIyNTE0LCJuYmYiOjE3ODgwMTg5MTQsImlhdCI6MTc4ODAxODkxNCwianRpIjoiMSJ9.jm4jIzrATu0zQab5Z0c9w-lOwn0kmdXYAtxKYf_WAGQ
 #
 ### Base
 GET {{baseUrl}}
@@ -27,6 +27,7 @@ Authorization: Bearer {{token}}
 ### Nuova sala con dati errati (deve ritornare HTTP 400 Bad Request)
 POST {{baseUrl}}/scuola/sala HTTP/1.1
 Content-Type: application/json; charset=utf-8
+Authorization: Bearer {{token}}
 
 {
   "Id": 0,
@@ -38,6 +39,7 @@ Content-Type: application/json; charset=utf-8
 ### Nuova sala con dati corretti
 POST {{baseUrl}}/scuola/sala HTTP/1.1
 Content-Type: application/json; charset=utf-8
+Authorization: Bearer {{token}}
 
 {
   "Nome": "Sala molto nuova"
@@ -46,6 +48,7 @@ Content-Type: application/json; charset=utf-8
 ### Aggiornamento sala
 PUT {{baseUrl}}/scuola/sala HTTP/1.1
 Content-Type: application/json; charset=utf-8
+Authorization: Bearer {{token}}
 
 {
   "Id": 25,
@@ -56,6 +59,7 @@ Content-Type: application/json; charset=utf-8
 ### Cancellazione sala
 DELETE {{baseUrl}}/scuola/sala/26 HTTP/1.1
 Content-Type: application/json; charset=utf-8
+Authorization: Bearer {{token}}
 #
 ### Token jwt
 POST {{baseUrl}}/login HTTP/1.1
@@ -63,7 +67,7 @@ Content-Type: application/json; charset=utf-8
 
 {
   "Nome": "Admin",
-  "Password": "prova123"
+  "Password": "Password123"
 }
 
 # 
@@ -80,6 +84,7 @@ Content-Type: application/json; charset=utf-8
 ### richiesta errate
 GET {{baseUrl}}/login HTTP/1.1
 Content-Type: application/json; charset=utf-8
+Authorization: Bearer {{token}}
 
 #
 ### preflight

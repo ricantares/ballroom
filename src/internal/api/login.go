@@ -9,9 +9,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"ricantares.com/ballroom/internal/domain"
-	"ricantares.com/ballroom/internal/logger"
-	"ricantares.com/ballroom/internal/security"
+	"ricantares.com/ballroom/src/internal/domain"
+	"ricantares.com/ballroom/src/internal/logger"
+	"ricantares.com/ballroom/src/internal/security"
 )
 
 // verifica i dati di login e restituisce un token jwt
@@ -25,7 +25,7 @@ func (h RouteHandler) HandleLogin(c *gin.Context) {
 	}
 
 	// recupero dati utente
-	logger.LogError(fmt.Sprintf("utente: %v", utente))
+	logger.LogDebug(fmt.Sprintf("utente: %#v", utente))
 	urepo, err := h.repo.GetUtenteByName(utente.Nome)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, ApiResponse{Code: http.StatusUnauthorized, Message: "Credenziali non valide (U001)", Data: ""})

@@ -11,8 +11,8 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	"ricantares.com/ballroom/internal/domain"
-	"ricantares.com/ballroom/internal/logger"
+	"ricantares.com/ballroom/src/internal/domain"
+	"ricantares.com/ballroom/src/internal/logger"
 )
 
 type JWTtoken struct {

@@ -3,7 +3,7 @@ package mock
 import (
 	"time"
 
-	"ricantares.com/ballroom/internal/domain"
+	"ricantares.com/ballroom/src/internal/domain"
 )
 
 // Deve implementare tutti i metodi dell'interfaccia db.DB (cfr. repo.go)

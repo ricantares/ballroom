@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"ricantares.com/ballroom/internal/logger"
-	"ricantares.com/ballroom/internal/security"
+	"ricantares.com/ballroom/src/internal/logger"
+	"ricantares.com/ballroom/src/internal/security"
 )
 
 // struttura del body logger

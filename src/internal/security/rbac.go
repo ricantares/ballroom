@@ -36,8 +36,8 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	dom "ricantares.com/ballroom/internal/domain"
-	"ricantares.com/ballroom/internal/logger"
+	dom "ricantares.com/ballroom/src/internal/domain"
+	"ricantares.com/ballroom/src/internal/logger"
 )
 
 type Utente struct {

@@ -10,8 +10,8 @@ import (
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
-	"ricantares.com/ballroom/internal/domain"
-	"ricantares.com/ballroom/internal/logger"
+	"ricantares.com/ballroom/src/internal/domain"
+	"ricantares.com/ballroom/src/internal/logger"
 )
 
 // Connessione o pool di connessioni alla base dati

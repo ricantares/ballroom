@@ -6,14 +6,15 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"ricantares.com/ballroom/internal/api"
-	"ricantares.com/ballroom/internal/db"
-	"ricantares.com/ballroom/internal/logger"
-	"ricantares.com/ballroom/internal/security"
+	"ricantares.com/ballroom/src/internal/api"
+	"ricantares.com/ballroom/src/internal/db"
+	"ricantares.com/ballroom/src/internal/logger"
+	"ricantares.com/ballroom/src/internal/security"
 )
 
 // main avvia l'applicazione web in base al parametro di lancio
@@ -21,9 +22,9 @@ import (
 // lancia il server web in modalita' di test se viene specificato il parametro "test"
 func main() {
 	// Caricamento environment
-	err := godotenv.Load(".env")
+	err := loadEnvironment()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Errore di caricamento del file '.env': %v", err)
+		fmt.Fprintf(os.Stderr, "Errore di caricamento dell'ambiente: %v", err)
 		panic(err)
 	}
 
@@ -62,6 +63,30 @@ func main() {
 		logger.LogError(fmt.Sprintf("Problemi nell'avvio del server. - err: %v", err))
 	}
 
+}
+
+func loadEnvironment() error {
+	candidates := []string{".env", filepath.Join("src", ".env")}
+	var envFile string
+	for _, candidate := range candidates {
+		if _, err := os.Stat(candidate); err == nil {
+			envFile = candidate
+			break
+		}
+	}
+	if envFile == "" {
+		return fmt.Errorf("file .env non trovato (cercati .env e src/.env)")
+	}
+
+	if err := godotenv.Load(envFile); err != nil {
+		return err
+	}
+
+	baseDir := filepath.Dir(envFile)
+	if baseDir == "." {
+		return nil
+	}
+	return os.Chdir(baseDir)
 }
 
 /*************  ✨ Windsurf Command ⭐  *************/

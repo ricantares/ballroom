@@ -6,7 +6,7 @@ import (
 	"errors"
 
 	"github.com/jackc/pgx/v5"
-	"ricantares.com/ballroom/internal/domain"
+	"ricantares.com/ballroom/src/internal/domain"
 )
 
 // Scuola services

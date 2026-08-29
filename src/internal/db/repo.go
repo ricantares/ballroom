@@ -2,7 +2,7 @@ package db
 
 // Interfacce di servizio per l'accesso ai dati
 
-import "ricantares.com/ballroom/internal/domain"
+import "ricantares.com/ballroom/src/internal/domain"
 
 // Interfacce di servizio che uno specifico Repository deve implementare
 type DB interface {
